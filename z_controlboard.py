@@ -165,7 +165,7 @@ else:
         get_custom_objects().update({channelname : customMetric})
         return [channelname]
     customMetrics = install_channel_dicemetric(1,"Temporalis")
-"""     customMetrics = install_channel_dicemetric(1,"Brain")
+    """     customMetrics = install_channel_dicemetric(1,"Brain")
     customMetrics += install_channel_dicemetric(2,"CSF")
     customMetrics += install_channel_dicemetric(3,"DuraNSinus")
     customMetrics += install_channel_dicemetric(4,"SeptumPellucidum")
