@@ -72,7 +72,7 @@ from functools import partial
 # sets up variables
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 images = "image_data"
-labels = "mask_data"
+labels = "mask_data_temp"
 preds = "image_data_predict"
 try:
     os.mkdir(os.path.join(root, "results_folder"))
@@ -94,12 +94,12 @@ if predict:
 ##################################################################################
 
 # sets up some basic hyperparameters
-nb_classes = 17 # number of classes (+1 for background)
+nb_classes = 2 #17 # number of classes (+1 for background), original is 17
 TVsplit = 0     # training-validation split (0 to 1), splits data from the "image_data" folder volume-wise, used when sorting data
 loss = "categorical_crossentropy"
 optimizer = Adam(lr = 1e-4)
 epochs = 10 # bring back to 500 after testing
-batchsize = 1   # please reduce this if OOM error occurs, original was 3
+batchsize = 3   # please reduce this if OOM error occurs, original is 3
 
 # augmentation parameters
 augmentation = True
@@ -164,7 +164,8 @@ else:
         customMetric = partial(channel_dice, channelindex)
         get_custom_objects().update({channelname : customMetric})
         return [channelname]
-    customMetrics = install_channel_dicemetric(1,"Brain")
+    customMetrics = install_channel_dicemetric(1,"Temporalis")
+"""     customMetrics = install_channel_dicemetric(1,"Brain")
     customMetrics += install_channel_dicemetric(2,"CSF")
     customMetrics += install_channel_dicemetric(3,"DuraNSinus")
     customMetrics += install_channel_dicemetric(4,"SeptumPellucidum")
@@ -174,7 +175,7 @@ else:
     customMetrics += install_channel_dicemetric(8,"Insular")
     customMetrics += install_channel_dicemetric(9,"InternalCapsule")
     customMetrics += install_channel_dicemetric(10,"Ventricle")
-    customMetrics += install_channel_dicemetric(11,"CentralSulcus")
+    customMetrics += install_channel_dicemetric(11,"CentralSulcus") """
 
     model.compile(loss = loss, optimizer = optimizer, metrics=['accuracy'] + customMetrics, sample_weight_mode = "temporal")
 
