@@ -27,17 +27,20 @@ if not os.path.exists(os.path.join(root, "weights.hdf5")):
 ### To train using your own data, please comment the section above and uncomment the section below ###
 
 import os
+import sys
 root = os.path.dirname(os.path.realpath(__file__))
 print("Sort (first step): Reads Nifti files from the 'image_data' and 'mask_data' folders and sorts them to disk. All files should have the same filename.")
 print("Train: Trains on sorted data.")
 
 while True:
-    flag = input("Sort, Train, Exit? (s/t/x): ")
+    #flag = 'input("Sort, Train, Exit? (s/t/x): ")'
+    flag = sys.argv[1]
     if flag == "t":
         predict = False
         sortimg = False
         weights = ""     # You may enter the path to a weight file here if performing transfer learning.
-        testname = input("Enter a name for this training session (no space): ")
+        #testname = input("Enter a name for this training session (no space): ")
+        testname = sys.argv[2]
         break
     elif flag == "s":
         predict = False
